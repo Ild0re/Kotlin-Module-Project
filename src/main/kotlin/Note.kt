@@ -1,29 +1,32 @@
 import java.util.Scanner
 
-class Note (
-    var name: String,
-    var text: String
+data class Note (
+    val name: String = "",
+    val text: String = ""
 ) : CreateItem {
-    override fun createItem(): Any {
-        var flag: Boolean = true
-        while (flag) {
-            println("Пожалуйста, введите название заметки:")
-            var answer = Scanner(System.`in`).nextLine()
-            if (answer !is String) {
-                println("Название должно быть строкой!")
-            } else {
-                this.name = answer
-                println("Пожалуйста, введите текст заметки:")
-                var newText = Scanner(System.`in`).nextLine()
-                if (newText !is String) {
-                    println("Текст должен быть строкой!")
+    companion object {
+        fun createItem(): Note {
+            while (true) {
+                println("Пожалуйста, введите название заметки:")
+                val newName = Scanner(System.`in`).nextLine()
+                if (newName !is String || newName.isEmpty()) {
+                    println("Название должно быть строкой!")
                 } else {
-                    this.text = newText
-                    break
-                }
-            }
+                    while (true) {
+                        println("Пожалуйста, введите текст заметки:")
+                        val newText = Scanner(System.`in`).nextLine()
+                        if (newText !is String || newText.isEmpty()) {
+                            println("Текст должен быть строкой!")
+                        } else {
+                            return Note(newName, newText)
+                        }
+                    }
 
+                }
+
+            }
         }
-        return this
     }
+
+
 }
